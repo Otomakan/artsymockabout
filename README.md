@@ -1,2 +1,3 @@
 # artsymockabout
-Buch of chenanigans to explore creative coding
+Bunch of chenanigans to explore creative coding.
+
