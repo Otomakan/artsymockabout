@@ -15,7 +15,7 @@ void setup(){
   colorPalette[1]= new Tuple(356,65,100);
   colorPalette[2]= new Tuple(206,79,100);
   colorPalette[3]= new Tuple(126,56,96);
-  frameRate(30);
+  //frameRate(30);
   for(int i =0; i<wave.length; i++){
 //Green Spill
       //colors[i] = new Tuple(floor(random(0,255)), (244-(i*5)), 137);
@@ -33,7 +33,7 @@ void draw(){
   background(255);
   //rotateX(-PI/8);
   //rotateY(PI/3);
-//(-PI/2)*(width/2), -mouseY, 300.0
+//(-PI/2)*(width/2), -mouseY, 300.0f
   ortho(-width/1.25, width/1.25, -height/1.25, height/1.25, 0, 6000);
    camera(map(mouseX, 0,600,-600, 600), map(mouseY, 0,600, -600,1200),  533, // eyeX, eyeY, eyeZ
          width/2, 150 , -width/4, // centerX, centerY, centerZ
@@ -86,6 +86,9 @@ void draw(){
       // Then we remap the distance so that it is falls evenly under and over 0 the smaller the remaping the more subtle the size differences;
       float adjustedDistance = map(realDistance, 0,width/2,-2.2,2.2);
       float y = map(cos(-adjustedDistance+offset), -1,1, 100,450) ;
+      if(realDistance ==0 ){
+        background(0);
+      }
       noStroke();
       translate(x+width/4, height/2, -z);
 //Spill Mode
@@ -94,16 +97,16 @@ void draw(){
           //fill(colors[i].r, colors[i].g, colors[i].b);
         //}
       //}
-      fill(255,0,100);
-      if(z==4*rectWidth && x>4&& x<width-(rectWidth*4)){
-        fill(255,100,0);
-      }
-      if(z==5*rectWidth && x>4&& x<width-(rectWidth*12)){
-        fill(255,100,0);
-      }
-       if(z==12*rectWidth && x>4&& x<width-(rectWidth*4)){
-        fill(255,100,0);
-      }
+      //fill(255,0,100);
+      //if(z==4*rectWidth && x>4&& x<width-(rectWidth*4)){
+      //  fill(255,100,0);
+      //}
+      //if(z==5*rectWidth && x>4&& x<width-(rectWidth*12)){
+      //  fill(255,100,0);
+      //}
+      // if(z==12*rectWidth && x>4&& x<width-(rectWidth*4)){
+      //  fill(255,100,0);
+      //}
       
       //for (int i =0; i<wave.length;i++){
       // if(realDistance < rectWidth*(floor(wave[i].counter)) && realDistance >= rectWidth*(floor(wave[i].counter)-1) ){
@@ -131,7 +134,7 @@ void draw(){
     //  }
    
     //}
-    //save(
+    saveFrame();
     img_counter+=1;
 }
 
