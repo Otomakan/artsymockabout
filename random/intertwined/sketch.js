@@ -32,6 +32,14 @@ function draw() {
   
 }
 
+var Flow = function(startx, starty){
+    this.startx = startx
+    this.starty = starty
+    this.draw  = function(){
+        
+    }
+}
+
 
 // var Line = function(startx, starty, upperlimit, lowerlimit, sW,hsl) {
 //     this.startx = startx

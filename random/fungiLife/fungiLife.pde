@@ -1,6 +1,6 @@
 
 
-int gridSize = 100;
+int gridSize = 600;
 int grid[][] = new int[gridSize][gridSize];
 int rectSize = 600/gridSize;
 
@@ -27,7 +27,6 @@ void draw(){
   background(255);
   noStroke();
   fill(0);
-  int[][] gridCopy =  new int[gridSize][gridSize];
   for(int x=1; x<grid.length-1;x++){
     for(int y=1; y<grid[x].length-1;y++){
       //We are going clockwise here from the top
@@ -51,33 +50,25 @@ void draw(){
       if(grid[x][y]==1){
         //#Rule One
         if(nCounter<2){
-          gridCopy[x][y]=0;
+          grid[x][y]=0;
         }
       //Rule Two
         else if(nCounter==2 || nCounter ==3){
-          gridCopy[x][y]=1;
+          grid[x][y]=1;
         }
       //Rule Three
         else if(nCounter>3){
-          gridCopy[x][y]=0;
+          grid[x][y]=0;
         }
       }
       //Rule for Dead Cell
-      else if(grid[x][y]==0){
+      if(grid[x][y]==0){
         if(nCounter==3){
-          gridCopy[x][y]=1;
-        }
-        else{
-        gridCopy[x][y]=0;
+          grid[x][y]=1;
         }
       }
       
-      }
-    }
-    
-    grid = gridCopy;
-    for(int x=1; x<grid.length-1;x++){
-    for(int y=1; y<grid[x].length-1;y++){
+      
       if(grid[x][y]==1){
         rect(x*rectSize, y*rectSize, rectSize,rectSize);
       }

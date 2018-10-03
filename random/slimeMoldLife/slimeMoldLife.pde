@@ -1,6 +1,6 @@
 
 
-int gridSize = 600;
+int gridSize = 300;
 int grid[][] = new int[gridSize][gridSize];
 int rectSize = 600/gridSize;
 
@@ -12,7 +12,7 @@ void setup(){
     for(int ii=0; ii<grid[i].length;ii++){
       grid[i][ii]=0;
       float rando = random(0,1);
-      if (rando<0.07){
+      if (rando<0.045){
         grid[i][ii]=1;
       }
     }
@@ -24,9 +24,9 @@ void setup(){
 }
 
 void draw(){
-  background(255);
+  background(84, 67, 11);
   noStroke();
-  fill(0);
+  fill(252, 235, 00);
   for(int x=1; x<grid.length-1;x++){
     for(int y=1; y<grid[x].length-1;y++){
       //We are going clockwise here from the top
