@@ -1,13 +1,15 @@
 
-
+import java.util.Arrays;
 int gridSize = 100;
 int grid[][] = new int[gridSize][gridSize];
 int rectSize = 600/gridSize;
+int[] deadCellRulesLive = {3};
+int [] liveCellRulesLive = {2,3};
 
 
 void setup(){
   size(600,600);
-  frameRate(20);
+  frameRate(10);
   for(int i=0; i<grid.length;i++){
     for(int ii=0; ii<grid[i].length;ii++){
       grid[i][ii]=0;
@@ -49,22 +51,18 @@ void draw(){
       }
       //Rules for live cells
       if(grid[x][y]==1){
-        //#Rule One
-        if(nCounter<2){
-          gridCopy[x][y]=0;
-        }
-      //Rule Two
-        else if(nCounter==2 || nCounter ==3){
+         if (Arrays.binarySearch(liveCellRulesLive, nCounter)>=0){
           gridCopy[x][y]=1;
         }
-      //Rule Three
-        else if(nCounter>3){
+        else{
           gridCopy[x][y]=0;
         }
+       
       }
       //Rule for Dead Cell
       else if(grid[x][y]==0){
-        if(nCounter==3){
+
+       if (Arrays.binarySearch(deadCellRulesLive, nCounter)>=0){
           gridCopy[x][y]=1;
         }
         else{
@@ -83,4 +81,13 @@ void draw(){
       }
     }
   }
+}
+
+public boolean findInt(int[] intlist, int desired){
+   for (int num : intlist){
+       if (desired == (num)) {
+           return true;
+       }
+   }
+   return false; //if we get here… there is no desired String, return false.
 }

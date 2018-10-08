@@ -123,6 +123,53 @@ void draw(){
     
     }
     
+    for(float z=0; z<=width;z+=rectWidth){ 
+    for(float x = 0 ; x <= width; x+= rectWidth){
+      pushMatrix();
+
+      colorMode(HSB, 360,100,100);
+      //First we calculate the distance between each point and the center
+      float realDistance = dist(x, z,  width/2, width/2);
+      // Then we remap the distance so that it is falls evenly under and over 0 the smaller the remaping the more subtle the size differences;
+      float adjustedDistance = map(realDistance, 0,width/2,-2.2,2.2);
+      float y = map(cos(-adjustedDistance+offset), -1,1, 100,450) ;
+      if(realDistance ==0 ){
+        background(0);
+      }
+      noStroke();
+      translate(x+width/4, height/2, -z);
+//Spill Mode
+      //for(int i =0; i<colors.length; i++){
+       //if(realDistance < rectWidth*(floor(colorCounter)+i+1) && realDistance >= rectWidth*(floor(colorCounter)+i-1) ){
+          //fill(colors[i].r, colors[i].g, colors[i].b);
+        //}
+      //}
+      //fill(255,0,100);
+      //if(z==4*rectWidth && x>4&& x<width-(rectWidth*4)){
+      //  fill(255,100,0);
+      //}
+      //if(z==5*rectWidth && x>4&& x<width-(rectWidth*12)){
+      //  fill(255,100,0);
+      //}
+      // if(z==12*rectWidth && x>4&& x<width-(rectWidth*4)){
+      //  fill(255,100,0);
+      //}
+      
+      //for (int i =0; i<wave.length;i++){
+      // if(realDistance < rectWidth*(floor(wave[i].counter)) && realDistance >= rectWidth*(floor(wave[i].counter)-1) ){
+      //   fill(wave[i].hue, 60,100);
+      //  }
+      //}
+     
+
+  
+      box(rectWidth, y, rectWidth);
+      popMatrix();
+    }
+    
+    
+    }
+    
     offset+=0.1;
     //colorCounter+=0.03;
     //colorCounter2 += 0.1;
