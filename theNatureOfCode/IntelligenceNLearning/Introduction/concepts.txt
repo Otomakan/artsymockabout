@@ -1,0 +1,8 @@
+Graph Systems: Composed of Node and Edge. Example of a graph system You can have weighed ones or not.
+
+Dijkstra's Algorithm and A# are Search algorithms. for wieghted algorithms. BFS for search ones
+
+Search Algorithms:
+
+Binary Search Tree: Methods that allow to move through data structure. 
+tree where each node has two connections.  Choose a random number as the root. If less than left node , if more right node. 

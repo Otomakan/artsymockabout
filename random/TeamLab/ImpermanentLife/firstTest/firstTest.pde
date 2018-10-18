@@ -1,25 +1,25 @@
-int numHearts=100;
+int numHearts=20;
 Heart[] myHearts;
 PImage img;
 
 void setup(){
   size(600,600);
-  frameRate(5);
+  frameRate(15);
   img = loadImage("../imparmanentlife.jpg");
   background(255);
   myHearts = new Heart[numHearts];
   for(int i=0; i<numHearts;i++){
-    float x = random(100,width-100);
-    float y = random(100,height-100);
-      myHearts[i] = new Heart(x,y,random(-0.7,0.7),random(-0.7,0.7),100);
+    float x = random(10,width-10);
+    float y = random(10,height-10);
+      myHearts[i] = new Heart(x,y,random(-0.7,0.7),random(-0.7,0.7),300);
      }
 
 }
 
 void draw(){
   
-  //image(img,0,0);
-  background(255);
+  image(img,0,0);
+  //background(255);
   for(int i=0; i<numHearts;i++){
     myHearts[i].display();
     myHearts[i].move();
@@ -53,10 +53,10 @@ class Heart{
   }
   void display(){
   stroke(239, 219, 103,50);
-  fill(250,20,40,30);
+  fill(250,20,40,50);
   
   pushMatrix();
-  
+  scale(2,2);
   translate(xpos, ypos);
   
     //rotateY(rotation);

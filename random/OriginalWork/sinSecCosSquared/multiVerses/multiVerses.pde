@@ -8,14 +8,15 @@ void setup(){
   for (int i=0; i<colors.length;i++){
     colors[i]= color(random(0,255),random(0,255),random(0,255),50);
   }
-}
-
-void draw(){
-  background(230);
-  fill(255);
+  
   camera(width/2.0, height/2, 1000 / tan(PI*30.0 / 180.0),
         width/2.0, height/2.0,
         0, 0, 1, 0);
+}
+
+void draw(){
+  background(253, 255, 224);
+  noFill();
     pushMatrix();
     stroke(244, 66, 104);
       beginShape(POINTS);
@@ -37,8 +38,9 @@ void draw(){
     endShape();
     popMatrix();
   //}
+  saveFrame(); 
 //Optimal in my humble opinion
-  offset+=0.04;
+  offset+=0.2;
 }
 
 class Tuple{

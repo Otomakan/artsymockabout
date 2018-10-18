@@ -1,0 +1,5 @@
+y
+
+Try this equation tan(a * (x^2 + b)) and its' derivative 2*1*x*sec(a*(x^2+b))^2
+Derivative of tan(cos(sin(x))): -(cos(x)*sin(sin(x))*sec(cos(sin(x)))^2)
+Derivative of tan(cos(x)) : −(sin(x)*sec(cos(x))^2)
