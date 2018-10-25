@@ -6,3 +6,5 @@ Search Algorithms:
 
 Binary Search Tree: Methods that allow to move through data structure. 
 tree where each node has two connections.  Choose a random number as the root. If less than left node , if more right node. 
+
+Breadth First Search: Looking at the clostest elements then the ones closest to them until we find what we want

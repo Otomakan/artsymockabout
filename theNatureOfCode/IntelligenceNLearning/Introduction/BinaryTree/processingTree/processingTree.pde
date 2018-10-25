@@ -10,22 +10,20 @@ void setup(){
   new Pair(2,"generate"),
   new Pair(5,"super"),
   new Pair(3, "ralp"),
-  new Pair(7,"emm")};
+  new Pair(7,"emm")
+};
   
   for(int i=0;i<myList.length;i++){
     //println(myList[i].ix);
     nodeTree.checkNum(myList[i]);
   }
   nodeTree.traverse();
-  //print(nodeTree.right.value.ix);
+  //println(nodeTree.left.value.ix);
 }
 
 void draw(){
   background(250);
-    for(int i=0;i<myList.length;i++){
-    //println(myList[i].ix);
-    nodeTree.checkNum(myList[i]);
-  }
+   nodeTree.traverse();
 }
 
 class Node {
@@ -42,18 +40,19 @@ class Node {
   }
   
   void checkNum(Pair val){
-    //print(val.ix);
+    //If node is empty then we assign it a value otherwise we look if new number is smaller
+    //if so put it in the left node, else in the right node. We are assuming that no equal values.
     if(this.value==null){
       this.value = val;
       this.display();
     }
-    else if(this.value.ix<val.ix){
+    else if(val.ix<this.value.ix){
       if(this.left ==null){
         this.left = new Node(xpos-50,ypos+50);
       }
       this.left.checkNum(val);
     }
-    else if(this.value.ix>val.ix){
+    else if(val.ix>this.value.ix){
       if(this.right ==null){
         this.right = new Node(xpos+50,ypos+50);
       }
@@ -65,6 +64,8 @@ class Node {
      pushMatrix();
      fill(0);
      ellipse(xpos, ypos,30,30);
+     fill(255);
+     text(Integer.toString(this.value.ix),xpos, ypos);
      popMatrix();
    }
    
@@ -72,7 +73,7 @@ class Node {
       if(this.left!=null){
         this.left.traverse();
       }
-      println(this.value.ix);
+      this.display();
       if(this.right!=null){
         this.right.traverse();
       }
