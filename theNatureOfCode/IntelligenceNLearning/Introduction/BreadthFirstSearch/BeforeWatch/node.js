@@ -22,7 +22,7 @@ class Node  {
 
 				//We check if some of the other children have that value as a child
 				that.children.forEach((child)=>{
-					if(child.val)
+					// if(child.val)
 				})
 
 				that.children.push(new Node(that.xpos+(120*i),that.ypos+120))
