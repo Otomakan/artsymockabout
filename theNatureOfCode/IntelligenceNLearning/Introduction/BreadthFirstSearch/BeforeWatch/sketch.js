@@ -9,13 +9,13 @@ let graph = {
   'jonny': []
 }
 
-	let nodeTree= new Node(20,20)
-
+	// let nodeTree= new Node(20,20)
+let group = new Group(graph)
 function setup(){
 	
 	createCanvas(600,600);
 	background(25);
-	nodeTree.setChildren('you',graph)
+	// nodeTree.setChildren('you',graph)
 
 }
 
