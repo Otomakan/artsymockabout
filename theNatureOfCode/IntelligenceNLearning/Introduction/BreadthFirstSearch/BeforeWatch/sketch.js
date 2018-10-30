@@ -9,12 +9,14 @@ let graph = {
   'jonny': []
 }
 
-	// let nodeTree= new Node(20,20)
-let group = new Group(graph)
+let nodeRoot= new Node()
+// let group = new Group(graph)
 function setup(){
 	
 	createCanvas(600,600);
 	background(25);
+  nodeRoot.setConnections('you', graph)
+  console.log(nodeRoot)
 	// nodeTree.setChildren('you',graph)
 
 }
