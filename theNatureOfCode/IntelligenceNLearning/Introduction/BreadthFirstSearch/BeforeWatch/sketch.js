@@ -9,19 +9,20 @@ let graph = {
   'jonny': []
 }
 
-let nodeRoot= new Node()
+let nodeRoot= new Node('you')
 // let group = new Group(graph)
-function setup(){
+// function setup(){
 	
-	createCanvas(600,600);
-	background(25);
+	// createCanvas(600,600);
+	// background(25);
+
   nodeRoot.setConnections('you', graph)
   console.log(nodeRoot)
 	// nodeTree.setChildren('you',graph)
 
-}
+// }
 
-function draw(){
+// function draw(){
 	
-	// nodeTree.traverse('peggy')
-}
+// 	// nodeTree.traverse('peggy')
+// }

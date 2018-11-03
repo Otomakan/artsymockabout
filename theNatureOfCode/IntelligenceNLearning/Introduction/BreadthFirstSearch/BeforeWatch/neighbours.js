@@ -14,58 +14,94 @@ class Group{
 }
 
 class Node{
-	constructor(parent) {
-		if(parent)
+	constructor(val,parent) {
+		if(parent){
 			this.neighbours = [parent]
+		}
 		else 
 			this.neighbours = []
-		this.val 
+		this.parent=parent
+		this.val = val
 		this.marked
 	}
 	keepRootOut(root){
 
 	}
 	setConnections(rootkey, list,seen_val){
-		if(seen_val==undefined)
+		if(seen_val==undefined){
 			seen_val=[]
-		seen_val.push(rootkey)
+			seen_val.push(rootkey)}
 		this.val=rootkey
-		let that=this
+		// let that=this
+		// console.log(this)
 
-		if(list[rootkey].length>0){
-			list[rootkey].forEach(function(subval,i){
-				if(!seen_val.includes(subval)){
-					that.neighbours.push(new Node(that))
-					that.neighbours[i].setConnections(subval,list,seen_val)
-					return seen_val
+		// if(list[rootkey].length>0){
+		if(list[rootkey].length==this.neighbours.length)
+			return
+		for(let i =0; i<list[rootkey].length;i++){
+			let subval = list[rootkey][i]
+			// console.log(subval)/
+			if(!seen_val.includes(subval)){
+				seen_val.push(subval)
+				this.neighbours.push(new Node(subval,this))
+				console.log(new Node(subval,this))
+			}
+			else{
+				console.log('in else')
+				this.neighbours.push(this.findNeighbour(subval))
+				console.log('out else')
 				}
-				else{
-					that.neighbours.push(that.findNeighbour(subval))
-					return seen_val
-				}
-			})
 		}
-		else 
-			return seen_val
-				
+		
+		// if(!seen_valthis.val)
+		for(let i=0;i<this.neighbours.length;i++){	
+		// console.log			
+			this.neighbours[i].setConnections(this.neighbours[i].val,list,seen_val)
+		}
 	}
-	findNeighbour(val){
+	findNeighbour(val,visited_neighbours){
 		let that = this
-		console.log('bloloo')
-		console.log(this)
-		if(this.neighbours.length>0){
-		this.neighbours.forEach((subval,i)=>{
-			console.log(subval.val)
+		if(visited_neighbours==undefined)
+		 	visited_neighbours =[]
+		// if(this.neighbours.length>0){
+		for(let i =0; i<this.neighbours.length;i++){
+			console.log(this.neighbours[i].val)
 			console.log(val)
-			if(subval.val==val){
-				console.log(that.neighbours[i])
+			// console.
+			if(this.neighbours[i].val==val){
+				console.log('fdsfsd')
+				// console.log
 				return that.neighbours[i]
+				break;
 
 			}
-			else if(i>this.neighbours.length)
-				return that.neighbours[i].findNeighbour(val)
-		})
-		}
+			else {
+				// console.log(visited_neighbours)
+				// console.log(subval.val)
+				console.log(this.neighbours[i])
+				visited_neighbours.push(this.neighbours[i].val)
+				return this.neighbours[i].findNeighbour(val, visited_neighbours)
+			}
+
+		} 
+		// this.neighbours.forEach((subval,i)=>{
+			// if(subval.val==val){
+			// 	console.log('fdsfsd')
+			// 	// console.log
+			// 	return that.neighbours[i]
+
+			// }
+			// else {
+			// 	// console.log(visited_neighbours)
+			// 	// console.log(subval.val)
+			// 	console.log(that.neighbours[i])
+			// 	visited_neighbours.push(subval.val)
+			// 	return that.neighbours[i].findNeighbour(val, visited_neighbours)
+			// }
+		// })
+		// }
+		// else 
+		// 	return 
 	}
 	checkIfNodeExists(name){
 
