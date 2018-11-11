@@ -7,10 +7,10 @@ use std::fmt;
 #[derive(PartialEq)]
 // We have to put Node in a box otherwise we get 'recursive has infinite size" error
 // The box isis a smart pointer to a heap allocated value of type T
-struct Node<'a> {
-	val: &'a i16,
-	left: Option<Box<Node<'a>>>,
-	right: Option<Box<Node<'a>>>,
+struct Node<'a>{
+	val: i16,
+	left: Option<&'a Node<'a>>,
+	right: Option<&'a Node<'a>>,
 }
 // impl PartialEq for Node {
 //     fn eq(&self, other: &Node) -> bool {
@@ -18,11 +18,27 @@ struct Node<'a> {
 //     }
 // }
 
-impl <'a>fmt::Display for Node<'a>{
+impl<'a>  fmt::Display for Node<'a>{
 	fn fmt(&self,f: &mut fmt::Formatter)-> fmt::Result{
+		 match self.right{
+			Some(x) => println!("We are in{}", x),
+			_ =>  println!("{:?}", "lol"),
+		};
 		write!(f,"val:{}, left:{:?}, right:{:?}",self.val,self.left,self.right)
 	}
 }
+
+// impl<'a> fmt::Display for std::options::Node<'a>{
+// 		fn fmt(&self,f: &mut fmt::Formatter)-> fmt::Result{
+// 		write!(f,"val:{}, left:{:?}, right:{:?}",self.val,self.left,self.right)
+// 	}
+// }
+
+// impl fmt::Display for Node{
+// 	fn fmt(&self,f: &mut fmt::Formatter)-> fmt::Result{
+// 		write!(f,"val:{}, left:{:?}, right:{:?}",self.val,self.left,self.right)
+// 	}
+// }
 
 fn main() {
 	let my_list =  [
@@ -33,20 +49,18 @@ fn main() {
   (5,"super"),
   (3, "ralp"),
   (7,"emm")
-  ];
+ ];
 
-  let mut charles = Node {left:None, right:None, val:&30_i16};
-  let mut bob = Node {left:None, right:Some(Box::new(charles)), val:&60_i16};
-  let mut ray = Node {left:None, right:None, val:&30_i16};
-  
-   let mut bob_dad = Node {left:None, right:Some(Box::new(bob)), val:&30_i16};
-   println!("{:?}",my_list);
-   // println!("{}",bob_dad );
-	match bob_dad.right{
-		&mut None => println!("Nope"),
-		&mut Some(ref mut subnode) => println!("{:?}", subnode),
-		_ => println!("ero");
-	}
+  let  charles = Node {left:None, right:None, val:30_i16};
+  let  bob = Node {left:None, right:Some(&charles), val:60_i16};
+  let  ray = Node {left:None, right:None, val:30_i16};
+	let  bob_dad = Node {left:None, right:Some(&bob), val:30_i16};
+	println!("{}",bob_dad );
+	// match bob_dad.right{
+	// 	 None => println!("Nope"),
+	// 	Some(subnode) => println!("Bobby is a node {}", subnode),
+	// 	_ => println!("ero"),
+	// }
 	// if bob.right==Some(Box::new(ray)){
 	// 	println!("Noooo");
 	// }
