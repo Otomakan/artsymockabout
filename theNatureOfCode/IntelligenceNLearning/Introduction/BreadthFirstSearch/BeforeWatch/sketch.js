@@ -3,10 +3,11 @@ let graph = {
   'bob': ['anuj', 'peggy'],
   'alice': ['peggy'],
   'claire': ['thom', 'jonny'],
+  'ron':[],
   'anuj': [],
-  'peggy': [],
+  'peggy': ['ron'],
   'thom': [],
-  'jonny': []
+  'jonny': [],
 }
 
 let nodeGroup = new AllNodes()

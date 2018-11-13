@@ -25,22 +25,25 @@ class Node{
 //Probably don't need rootkey, just use this.val
 	setConnections(rootkey, list){
 		// Search the values's neighbours and create nodes accordingly if the value hasn't been visited yet
-		if(!this.group.nodes.includes(rootkey)){
-			for(let i= 0; i<list[rootkey].length;i++){
+		if(!this.group.nodes.includes(this.val)){
+			for(let i= 0; i<list[this.val].length;i++){
 			
-
+				console.log(`the val is ${this.val} and we are setting ${list[rootkey][i]} `)
 				// before creating a node, check if it has been created already
-				let neigh = this.group.findNode(list[rootkey[i]])
+				let neigh = this.group.findNode(list[rootkey][i])
+				// console.log(neigh)
 				if(neigh!=undefined){
-					this.neighbours.push(nodeInGroup)
+					this.neighbours.push(neigh)
 				}
 				else {
 					neigh = new Node(list[rootkey][i], this.group)
 					this.group.addNode(neigh)
 					this.neighbours.push(neigh)
 				}
+				// If we explored the children, don't do it again
 				if(!neigh.marked){
 					neigh.setConnections(neigh.val, list)
+					this.marked = true
 				}
 			}
 		}
@@ -50,8 +53,5 @@ class Node{
 			// this.neighbours.push(this.group.findNode(rootkey))
 		}
 		// Now we are checking if the element is marked to go through it
-		
-
-
 	}
 }
