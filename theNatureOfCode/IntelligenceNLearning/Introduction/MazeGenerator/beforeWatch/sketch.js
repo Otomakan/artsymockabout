@@ -3,14 +3,16 @@
 // for red, green, and blue color values
 // var r, g, b;
 
-
-  var myGraph = new Graph(3,3)
+let graphWidth = 50
+let graphHeight = 50
+  var myGraph = new Graph(graphWidth,graphHeight)
 function setup() {
   createCanvas(600, 600);
   // Pick colors randomly
   r = random(255);
   g = random(255);
   b = random(255);
+  // frameRate(30);
   // console.log(grid)
 
   // let xrand = floor(random(0, grid.width))
@@ -36,14 +38,16 @@ function draw() {
   //   // grid.addAdjacentWalls(xrand,yrand)
   // }
   myGraph.allNodes.forEach(function (node,it) {
-    node.displayNode()
+    node.displayNode(graphWidth,graphHeight)
   })
    myGraph.edges.forEach(function (edge,it) {
     
     if(edge == null)
       return
-    edge.display()
+    edge.display(graphWidth,graphHeight)
   });
+
+  myGraph.pimsAlgo()
   // console.log(rootNode)
   // console.log(nodeList)
 

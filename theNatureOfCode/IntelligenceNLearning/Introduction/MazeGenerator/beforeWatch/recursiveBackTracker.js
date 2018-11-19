@@ -7,10 +7,12 @@ class Graph{
 	  this.width = width
 	  this.height = height
 	  this.edges = []
+	  this.mazeNode = []
+	  this.wallList = []
+	  this.start = true
 	}
 	createGraph(rootNode){
 		if(rootNode.x>this.width && rootNode.y>this.height){
-			console.log('blo')
 			return
 		}
 		this.allNodes.push(rootNode)
@@ -63,30 +65,74 @@ class Graph{
 
 	removeEdge(edge){
 		// edge = null
-		this.edges[((this.edges.findIndex((e)=> e==edge)))] = null
+		this.edges[((this.edges.findIndex((e)=> e==edge)))].up = false
 		// bob = null
 		edge = null
+	}
+	pimsAlgo(){
+		//Select random edge
+		let wallList = this.wallList
+		if(this.start){
+			let startNode = this.allNodes[floor(random(0,this.allNodes.length))];
+			this.start = false
+			startNode.included = true
+			for (let ed in startNode.edges){
+				if(!startNode.edges[ed])
+					continue
+				
+				else
+					wallList.push(startNode.edges[ed])
+			}
+		}
+		if(wallList.length>0){
+			let selectedWallIndex = floor(random(0,wallList.length))
+			let selectedWall = wallList[selectedWallIndex]
+			if((selectedWall.parent.included && !selectedWall.child.included)|| (selectedWall.child.included && !selectedWall.parent.included)){
+				selectedWall.up = false
+				if(!selectedWall.parent.included){
+					selectedWall.parent.included = true
+					for (let ed in selectedWall.parent.edges){
+						if(!selectedWall.parent.edges[ed])
+							continue			
+						else
+							wallList.push(selectedWall.parent.edges[ed])
+					}
+				}
+				else {
+					selectedWall.child.included = true
+					for (let ed in selectedWall.child.edges){
+						if(!selectedWall.child.edges[ed])
+							continue
+						else
+							wallList.push(selectedWall.child.edges[ed])
+					}
+				}
+			}
+			wallList.splice(selectedWallIndex,1)
+		}
 	}
 }
 class Edge{
 	constructor(parent,child){
 		this.parent = parent
 		this.child = child
+		this.up = true
 	}
-	display(){
-		push()
-		stroke(250)
-		strokeWeight(2)
-		line(20+this.child.x*100,20+this.child.y*100,20+this.parent.x*100+100,20+this.parent.y*100+100)
-	
-		pop()
+	display(graphWidth, graphHeight){
+		if(this.up){
+			push()
+			stroke(250)
+			strokeWeight(2)
+			line(this.child.x*(width/graphWidth),this.child.y*(height/graphHeight),this.parent.x*(width/graphWidth)+(width/graphWidth),this.parent.y*(height/graphHeight)+(height/graphHeight))		
+			pop()
+		}
 	}
 }
 class Node  {
 	constructor(x,y,parent) {
-		this.visited = 0
 		this.x = x
 		this.y = y
+		this.included = false
 		// this.edges
 		this.parent =[parent]
 		this.rightChild
@@ -101,27 +147,17 @@ class Node  {
 	createChildren(w,h, nodeList){
 		
 	}
-	displayNode(){
-		push()
-		fill(255,0,0)
-		stroke(0)
-		strokeWeight(2)
-		rect(20+this.x*100,20+this.y*100,100,100)
-
-		point(20+this.x*100,20+this.y*100)
-		
-		pop()
-	}
-	displayWalls(){
-		push()
-		stroke(250)
-		strokeWeight(2)
-		if(this.rightChild)
-			line(20+this.rightChild.x*100+100,20+this.rightChild.y*100, 20+this.rightChild.x*100+100,20+this.rightChild.y*100+100)
-		if(this.leftChild){
-			stroke(0,234,0)
-			line(20+this.leftChild.x*100,20+this.leftChild.y*100+100, 20+this.leftChild.x*100+100+100,20+this.leftChild.y*100)
+	displayNode(graphWidth,graphHeight){
+		if(!this.included){
+			push()
+			fill(255,0,0)
+			stroke(0)
+			strokeWeight(2)
+			rect(this.x*(width/graphWidth),this.y*(height/graphHeight),width/graphWidth,height/graphHeight)
+			// point(this.x*(width/graphWidth),this.y*(height/graphHeight))
+			
+			pop()
 		}
-		pop()
 	}
+
 }
