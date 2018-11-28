@@ -1,0 +1,2 @@
+Alright BFS is hard to do recursively focuse on something else dude
+
