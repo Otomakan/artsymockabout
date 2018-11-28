@@ -1,6 +1,9 @@
-class AllNodes{
+class Graph{
 	constructor(){
 		this.nodes = []
+		this.openSet = []
+		this.closeSet = []
+		this.meta = []
 	}
 	addNode(node){
 		this.nodes.push(node)

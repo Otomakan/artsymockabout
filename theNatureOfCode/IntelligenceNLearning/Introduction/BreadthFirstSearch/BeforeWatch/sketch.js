@@ -10,7 +10,7 @@ let graph = {
   'jonny': [],
 }
 
-let nodeGroup = new AllNodes()
+let nodeGroup = new Graph()
 let nodeRoot= new Node('you', nodeGroup)
 // let group = new Group(graph)
 // function setup(){
