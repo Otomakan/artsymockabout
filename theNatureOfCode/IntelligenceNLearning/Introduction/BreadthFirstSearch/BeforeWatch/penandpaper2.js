@@ -35,9 +35,16 @@ class Node{
 			
 				// before creating a node, check if it has been created already
 				let neigh = this.group.findNode(list[this.val][i])
-				// console.log(neigh)
+				// If the node exists at it to the neighbours
 				if(neigh!=undefined){
-					this.neighbours.push(neigh)
+					//Check if the value is not already a neighbour
+					let neighbourExists =false
+					this.neighbours.map((n)=>{
+						if(n.val ==neigh.val)
+							neighbourExists=true
+					})
+					if(neighbourExists)
+						this.neighbours.push(neigh)
 					neigh.parent.push(this)
 				}
 				else {
