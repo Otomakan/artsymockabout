@@ -19,7 +19,7 @@ let graph = {
 // 	// background(25);
 //   nodeRoot.setConnections('you', graph)
 //   console.log(nodeRoot)
-target='ron'
+    target='ron'
 
   // function exploreGraph(graph,rootEl,target){
     history = []

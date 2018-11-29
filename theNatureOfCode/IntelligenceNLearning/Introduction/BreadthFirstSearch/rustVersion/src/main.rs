@@ -1,104 +1,81 @@
-// use std::collections::BTreeMap;
-use std::fmt::{Debug, Formatter,Result};
-#[derive(Debug)]
+use std::collections::HashMap;
+// extern crate queues;
+// use queues::*;
+use std::collections::VecDeque;
 
-struct Node<'a> {
-	value : &'a str,
-	neighbours : Vec<&'a Node<'a>>,
-}
-struct Graph<'a> {
-	nodes : Vec<Node<'a>>
-}
 
-impl<'a> Node<'a>{
-	 fn new(value: &'a str)->Self{
-		Node{
-			value: value,
-			neighbours: Vec::new()
+type Names<'a> = HashMap<&'a String,  Vec<&'a String>>;
+
+fn main(){
+	let mut graph: Names = HashMap::new();
+	let you = String::from("you");
+
+	let alice = String::from("alice");
+
+	let bob = String::from("bob");
+	let claire = String::from("claire");
+	let anuj = String::from("anuj");
+	let peggy = String::from("peggy");
+	let thom = String::from("thom");
+	let ron = String::from("ron");
+	let jonny = String::from("jonny");
+	graph.insert(&you,
+		vec![&alice,&bob,&claire]);
+	graph.insert(&bob,
+		vec![&anuj,&peggy]);
+	graph.insert(&alice,
+		vec![&peggy]);
+	graph.insert(&claire,
+		vec![&thom,&jonny]);
+	graph.insert(&ron,
+		vec![&bob]);
+	graph.insert(&anuj,
+		vec![]);
+	graph.insert(&thom,
+		vec![]);
+	graph.insert(&peggy,
+		vec![&ron,&thom]);
+	graph.insert(&jonny,
+		vec![]);
+	// graph
+	println!("{:?}", graph);
+
+
+	let mut FIFOqueue: VecDeque<&String> = VecDeque::new();
+	FIFOqueue.push_back(&you);
+	let mut visited = Vec::new();
+	while FIFOqueue.len()!=0{
+		let  currentEntry =  FIFOqueue[0] ;
+		println!("The current Entry is {:?}",currentEntry );
+
+		visited.push(currentEntry);
+		let mut done = false;
+		if(graph[currentEntry].len()>0){
+			for el in &graph[currentEntry]{
+				for items in &visited{
+					if(el==items){
+						println!("visited");
+						done =true
+					}
+				}
+				if(!done){
+					println!("{:?}",done );
+					FIFOqueue.push_back(el);
+				}
+			}
 		}
+		FIFOqueue.pop_front();
 	}
-
-	fn add_neighbour(&mut self, new_neigh:&'a Node){
-		self.neighbours.push(new_neigh);
-	}
+	println!("{:?}",graph[&you] );
 }
-
-impl<'a> Graph<'a>{
-	// fn new(firstEdge:Node)-> Self{
-	// 	let mut graphVec = Vec::new();
-	// 	graphVec.push(&firstEdge);
-	// 	Graph<'a>{
-	// 		nodes :graphVec
-	// 	}
-	// }
-	fn insert_node(&mut self, new_node:Node<'a>) {
-		self.nodes.push( new_node);
-	}	
-	fn get_node(&self,target_name: &str)->Option<&Node>{
-		// let mut good_node = None;
-		// for curr_node in self.nodes.iter(){
-		// 	if curr_node.value == target_name {
-		// 		good_node = Some(curr_node);
-		// 	}
-		// }
-		// good_node
-		Some(&self.nodes[0])
-	}
-	fn add_edge(&self, target_1: &str, target_2 :&str){
-
-		// match n1 {
-		// 	Some(ref mut x) => {
-		// 		match n2 {
-		// 			Some(ref mut y) => {
-		// 				*x.add_neighbour(y);
-		// 				*y.add_neighbour(x);
-		// 			},
-		// 			None => println!("Err"),
-		// 		}
-		// 	},
-		// 	_ => println!("Error")
-		// };
-		
-		let mut n1 = &mut self.nodes[0];
-		// match self.get_node(target_1) {
-		// 	Some(x) => x,
-		// 	_ => panic!("There was an error!"),
-		// };
-		// let n2 = match self.get_node(target_2){
-		// 	Some(x) => x,
-		// 	_ => panic!("There was an error!"),
-		// };
-
-		n1.add_neighbour(&self.nodes[1]);
-		// n1
-		println!("{:?}",n1 );
-	}
-}
-
-
-impl<'a> Debug for Graph<'a>{
-	fn fmt(&self,f: &mut Formatter)-> Result{
-		for i in &self.nodes{
-			write!(f, "{:?}\n", i)?
-		}
-		Ok(())
-	}
-}
-// impl<'a> Node<'a>{
-// 	fn new(val: &str) -> Self {
-// 		Node<'a>{
-// 			value: val
-// 		}
-// 	}
+// let graph = {
+//   'you': ['alice', 'bob', 'claire'],
+//   'bob': ['anuj', 'peggy'],
+//   'alice': ['peggy'],
+//   'claire': ['thom', 'jonny'],
+//   'ron':[],
+//   'anuj': [],
+//   'peggy': ['ron'],
+//   'thom': [],
+//   'jonny': [],
 // }
-
-fn main() {
-	let root_edge = Node::new("you");
-	let mut graphVec = Vec::new();
-	graphVec.push(root_edge);
-	let mut graph = Graph {nodes: graphVec};
-	let mut lol =Node::new("lol");
-	graph.insert_node(lol);
-	graph.add_edge("lol","you");
-
-}
