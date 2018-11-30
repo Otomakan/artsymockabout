@@ -43,6 +43,7 @@ fn main(){
 
 	let mut FIFOqueue: VecDeque<&String> = VecDeque::new();
 	FIFOqueue.push_back(&you);
+	// let mut history = VecDeque<
 	let mut visited = Vec::new();
 	while FIFOqueue.len()!=0{
 		let  currentEntry =  FIFOqueue[0] ;
