@@ -114,4 +114,4 @@ for (let node in allNodes){
 	this.graph.unvisited.push(allNodes[node])
 }
 graph.rootNode.tentativeDistance = 0
-console.log(graph)
+

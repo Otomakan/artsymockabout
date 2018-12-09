@@ -3,8 +3,8 @@
 // for red, green, and blue color values
 // var r, g, b;
 
-let graphWidth = 50
-let graphHeight = 50
+let graphWidth = 100
+let graphHeight = 100
   var myGraph = new Graph(graphWidth,graphHeight)
 function setup() {
   createCanvas(600, 600);
@@ -12,14 +12,7 @@ function setup() {
   r = random(255);
   g = random(255);
   b = random(255);
-  // frameRate(30);
-  // console.log(grid)
-
-  // let xrand = floor(random(0, grid.width))
-  // let yrand = floor(random(0,grid.height))
-
-  //  grid.cells[xrand][yrand].maze = 1
-  // grid.addAdjacentWalls(xrand,yrand)
+  frameRate(600)
   myGraph.createGraph(myGraph.rootNode)
 
 }
