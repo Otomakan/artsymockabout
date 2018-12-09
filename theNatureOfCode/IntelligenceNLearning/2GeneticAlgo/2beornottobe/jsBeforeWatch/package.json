@@ -8,5 +8,8 @@
   "devDependencies": {
     "p5": "^0.7.1",
     "lr-http-server": "^0.1.5"
+  },
+  "dependencies": {
+    "typescript": "^2.0.2"
   }
 }

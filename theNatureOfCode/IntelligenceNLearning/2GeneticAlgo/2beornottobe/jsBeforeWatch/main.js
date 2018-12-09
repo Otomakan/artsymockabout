@@ -1,5 +1,5 @@
 
-let target = "ifuckinglovecheeseman"
+let target = "i\wfucking\wlove\wcheeseman"
 //Array containing element with fitness function
 let elements = []
 let elementsLength = 200
@@ -15,26 +15,25 @@ const randomWord = (length)=>{
 }
 
 
-
 const fitnessFunction = (target, word)=>{
-	weight = 0
+	fitness = 1
 	for (let key in target){
 		if(target[key]==word[key])
-			weight+=1
+			fitness+=1
 	}
-	return weight
+	return Math.pow(fitness)
 }
 
 const mate = (population)=>{
 	const newGeneration = []
-	let totalWeight = 0
+	let totalfitness = 0
 	for (let word in population){
-		totalWeight+= population[word].weight
+		totalfitness+= population[word].fitness
 	}
 	//pick parent
 	for(let i=0;i<population.length;i++){
-		let p1 = pickParent(totalWeight,population)
-		let p2 = pickParent(totalWeight, population.filter(word=>word.val !=p1.val))
+		let p1 = pickParent(totalfitness,population)
+		let p2 = pickParent(totalfitness, population.filter(word=>word.val !=p1.val))
 
 		let baby = newWord(makeBaby(p1.val,p2.val))
 		newGeneration.push(baby)
@@ -45,16 +44,30 @@ const mate = (population)=>{
 }
 
 const pickParent = (chances,population)=>{
-		parent = null
-		while(!parent){
-			for(let word in population){
-				if(Math.floor(Math.random()*chances)<population[word].weight){
-					return population[word]
-				}
-			}
+	
+	while(true){
+		let selectedWord = poolSelection(chances,population)
+		if(Math.floor(Math.random()*chances)<selectedWord.fitness){
+			return selectedWord
 		}
-		return parent
+		
 	}
+}
+
+const poolSelection = (chances,pool)=>{
+
+	while(true){
+		counter+=1
+		for(let word in pool){
+			if(Math.floor(Math.random()*chances)<pool[word].fitness){
+			return pool[word]
+		}
+		}
+		if(counter==20){
+			console.log("IT going crazy "+ counter)
+		}
+	}
+}
 const makeBaby=(p1,p2)=>{
 	let baby = ""
 	for(let char in p1){
@@ -73,14 +86,14 @@ const makeBaby=(p1,p2)=>{
 
 
 class Word{
-	constructor(val, weight) {
+	constructor(val, fitness) {
 		this.val = val
-	  	this.weight = weight
+	  	this.fitness = fitness
 	}
 }
 const newWord = (val)=>{
-	let weight = fitnessFunction(target,val)
-	return new Word(val,weight )
+	let fitness = fitnessFunction(target,val)
+	return new Word(val,fitness )
 }
 //Initializing first generation
 for(let i=0;i<elementsLength;i++){
