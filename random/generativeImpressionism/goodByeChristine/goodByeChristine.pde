@@ -2,10 +2,11 @@ PImage img;
 int goff = 0;
 float increment = 0.02;
 Particle[][] particles = new Particle[2000][2000];
-int startSizeX = 240;
-int startSizeY = 240;
-int incrementer = 2;
+int startSizeX = 440;
+int startSizeY = 440;
+int incrementer = 8;
 int[] bitMap = new int[2000000];
+int pointSize = 2;
 
 void setup(){
    size(1000,1000);
@@ -24,10 +25,11 @@ void setup(){
            particles[x][y] = new Particle(x,y, new PVector(0,0), img.pixels[x+y*img.width]);   
     }
   }
+  background(255);
 }
 
 void draw(){
-  background(254);
+  //background(254);
   for (int x = (img.width/2)-startSizeX; x < (img.width/2)+startSizeX; x+=incrementer) {
       for (int y = (img.height/2)-startSizeY; y < (img.height/2)+startSizeY; y+=incrementer ) {
            Particle p = particles[x][y];
@@ -67,6 +69,7 @@ class Particle{
       float angle = noise * TWO_PI;
       //println(sin(angle));
       //println(cos(angle));
+      //println(velocity.x);
      velocity.add(sin(angle),cos(angle));
      //velocity.normalize();
     if(sin(angle)>0){
@@ -83,12 +86,12 @@ class Particle{
      ypos += velocity.y;
       if(velocity.x>speed_lim){
         velocity.x-=1;
-     }if(velocity.x<-speed_lim){
+     }if(velocity.x<speed_lim){
         velocity.x+=1;
      }
      if(velocity.y>speed_lim){
         velocity.y-=1;
-     }if(velocity.y<-speed_lim){
+     }if(velocity.y<speed_lim){
         velocity.y+=1;
      }
     
@@ -96,7 +99,7 @@ class Particle{
   void display(){
     noStroke();
     fill(particleColor);
-    ellipse(xpos,ypos,5,5);
+    ellipse(xpos,ypos,pointSize,pointSize);
   }
 }
 

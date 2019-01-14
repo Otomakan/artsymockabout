@@ -2,12 +2,15 @@ int rectWidth = 30;
 float rectHeight = 1;
 float offset=0;
 float offsetNoise = 0;
+
+
 void setup(){
-  size(800,800);
+  size(600,600);
 
    //camera(width/2.0, height/2, 1000 / tan(PI*30.0 / 180.0),
    //     width/2.0, height/2.0,
    //     0, 0, 1, 0);
+   frameRate(20);
        
 }
 
@@ -58,7 +61,7 @@ void draw(){
   if(offset<3){
     offset+=0.03;
   }
-  offset+=noise(offsetNoise)*0.02;
+  offset+=noise(offsetNoise)*0.12;
   //saveFrame();
   
 }

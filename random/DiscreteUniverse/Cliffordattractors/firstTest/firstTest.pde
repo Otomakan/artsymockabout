@@ -15,7 +15,7 @@ void setup(){
   strokeWeight(0.1);
   stroke(0);
   vectors.add(new PVector(1,1));
-  for (int i=0; i<2500000;i++){
+  for (int i=0; i<250000;i++){
   float xposclone = xpos;
   xpos = sin(a*ypos)-c*(cos(a*xpos));
   ypos = sin(b*xposclone)-d*(cos(b*ypos));

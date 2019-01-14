@@ -63,15 +63,25 @@ function setup() {
     let userPairs = {}
 
     for(let i = 0; i<userArr.length-1;i++){
-      for(let ii = i; ii<userArr.length-1;ii++){
+      for(let ii = i+1; ii<userArr.length-1;ii++){
         let u1 = userArr[i]
         let u2 = userArr[ii]
-        userPairs[u1+"/"+u2]
-        let r1 = ratings[u1]
-        let r2 = ratings[u2]
-        console.log(r1)
+        userPairs[u1+"/"+u2] = 0
+        let occurence = 0
+        for(let movie in ratings[u1]){
+          if(ratings[u2].hasOwnProperty(movie)){
+              let r2 = ratings[u2][movie]
+              let r1 = ratings[u1][movie]
+              let dif = r1-r2
+              occurence+=1
+             userPairs[u1+"/"+u2]+= Math.pow(dif,2)
+          }
+        }
+
+       userPairs[u1+"/"+u2] = 1/userPairs[u1+"/"+u2]/occurence
       }
     }
+    console.log(userPairs)
     }
    }
   //   let p1Grade = ratings[p1][movie]
@@ -87,7 +97,7 @@ function setup() {
   //   else
   //     console.log("We only have one available value")
   
-}
+// }
 
 
 // function draw() {

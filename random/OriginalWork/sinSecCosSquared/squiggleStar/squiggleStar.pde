@@ -24,12 +24,16 @@ void draw(){
     //fill(244, 66, 104,40);
     stroke(244, 66, 104);
     //Turn to points and decrease i+= ad ii+= to get a star shape
-      beginShape();
-    strokeWeight(1);
+
+    strokeWeight(5);
+    float b = 0;
     for(float i=0; i<2*PI;i+=0.75){
-  
- 
+     
+       beginShape();
+       stroke(244, 66, floor(map(i,0,2*PI,0,255)));
       for(float ii=0;ii<PI;ii+=0.75){
+         pushMatrix();
+       //print(map(ii,0,PI,0,255));
       float x = -(sin(offset*(i*0.1)))*(1/(pow(cos(cos(offset*(ii*0.02))),2)));
       x = map(x, -2,2,250,450);
       
@@ -37,9 +41,11 @@ void draw(){
        y = map(y, -2, 2,250,450);
 
       curveVertex(x,y);
+      popMatrix();
     }
-    }
+    
     endShape();
+    }
     popMatrix();
   offset+=0.06;
   

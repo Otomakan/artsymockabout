@@ -4,7 +4,7 @@ float increment = 0.02;
 Particle[][] particles = new Particle[2000][2000];
 int startSizeX = 480;
 int startSizeY = 480;
-int incrementer = 6;
+int incrementer = 10;
 int[] bitMap = new int[2000000];
 
 void setup(){
@@ -109,7 +109,7 @@ class Particle{
   void display(){
     noStroke();
     fill(particleColor);
-    ellipse(xpos*2,ypos*2,5,5);
+    ellipse(xpos*2,ypos*2,10,10);
   }
 }
 

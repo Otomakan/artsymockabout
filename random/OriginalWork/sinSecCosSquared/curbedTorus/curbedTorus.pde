@@ -29,9 +29,9 @@ void draw(){
     //fill(244, 66, 104,40);
     stroke(244, 66, 104);
       beginShape(POINTS);
-      //rotateY(map(mouseY,0,width, -1,PI*4));
+      rotateY(map(mouseY,0,width, -1,PI*4));
       
-    strokeWeight(1);
+    strokeWeight(4);
     //translate(height/2, width/2, 0);
     for(float i=0; i<2*PI;i+=0.1){
   

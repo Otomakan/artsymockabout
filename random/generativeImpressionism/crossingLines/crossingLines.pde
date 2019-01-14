@@ -5,7 +5,8 @@ Particle[][] particles = new Particle[2000][2000];
 
 void setup(){
    size(881,618);
-   img = loadImage("hazrate-masomeh.jpg"); 
+   //img = loadImage("hazrate-masomeh.jpg"); 
+   //img = loadImage("christine.jpg");
    makeBitMap();
   img.loadPixels(); 
     for (int x = 0; x < img.width; x++) {
