@@ -1,0 +1,221 @@
+/*$colors:[url(https://github.com/Otomakan/jmisteli.github.io/tree/master/assets/images/cubeart/img1.png),green,blue,orange,magenta, yellow];
+*/
+ @import url('https://fonts.googleapis.com/css?family=Montserrat');
+ body{
+     text-align: center;
+     justify-content: center;
+}
+ #scene {
+     margin:0 auto;
+     padding:100px;
+     width: 50vh;
+     height: 50vh;
+     perspective: 240vh;
+}
+/*Animations */
+ @keyframes rotate{
+     from{
+        transform:rotateX(0deg);
+         transform:rotateY(0deg)
+    }
+     to{
+        transform:rotateX(360deg);
+         transform:rotateY(360deg)
+    }
+}
+ @media screen and (orientation:portrait) {
+     #cube {
+         transform:rotateX(-25deg) rotateY(25deg);
+        /*transform:rotateZ(5deg);
+        */
+         transition : 1.5s;
+         width: 100%;
+        /*animation: rotate 5s infinite;
+        */
+         height: 100%;
+         position: relative;
+         transform-style: preserve-3d;
+    }
+     .cube-face {
+         opacity:0.9;
+         position: absolute;
+         width: 50vw;
+         height: 50vw;
+    }
+     .front {
+         transform: rotateY( 0deg) translateZ(35vw);
+    }
+     .right {
+         transform: rotateY( 90deg) translateZ(35vw);
+    }
+     .back {
+         transform: rotateY(180deg) translateZ(35vw);
+    }
+     .left {
+         transform: rotateY(-90deg) translateZ(35vw);
+    }
+     .top {
+         transform: rotateX( 90deg) translateZ(30vw);
+    }
+     .bottom {
+         transform: rotateX(-90deg) translateZ(30vw);
+    }
+}
+ @media screen and (orientation:landscape) {
+     @keyframes rotate{
+         from{
+            transform:rotateX(0deg);
+             transform:rotateY(0deg)
+        }
+         to{
+            transform:rotateX(360deg);
+             transform:rotateY(360deg)
+        }
+    }
+     #selector{
+         height:100px;
+         width:100px;
+         background-color: red;
+    }
+     #cube {
+         transform:rotateX(-25deg) rotateY(25deg);
+        /*transform:rotateZ(5deg);
+        */
+         transition : 1.5s;
+         width: 100%;
+        /*animation: rotate 5s infinite;
+        */
+         height: 100%;
+         position: relative;
+         transform-style: preserve-3d;
+        /*/
+        / SET BACKGROUND OF EACH FACE*/
+        /*@for $i from 1 to length($colors) {
+            */
+            /*&:nth-child(#{
+                $i
+            }
+            ){
+                */
+                /*background: nth($colors, $i);
+                 transform: translateZ(100px);
+            }
+        }
+        */
+        /*/
+        / SET ANGLE OF FACE*/
+    }
+     .cube-face {
+         opacity:0.9;
+         position: absolute;
+         width: 50vh;
+         height: 50vh;
+        /*background-size:100%;
+        */
+    }
+     .front {
+         transform: rotateY( 0deg) translateZ(35vh);
+    }
+     .right {
+         transform: rotateY( 90deg) translateZ(35vh);
+    }
+     .back {
+         transform: rotateY(180deg) translateZ(35vh);
+    }
+     .left {
+         transform: rotateY(-90deg) translateZ(35vh);
+    }
+     .top {
+         transform: rotateX( 90deg) translateZ(30vh);
+    }
+     .bottom {
+         transform: rotateX(-90deg) translateZ(30vh);
+    }
+}
+ *{
+     font-family: 'Montserrat', sans-serif;
+}
+ .arrow-cube-container{
+    /*padding:100px;
+     width: 100px;
+     height: 100px;
+    */
+     perspective: 300px;
+     position: absolute;
+}
+ #left-arrow{
+     top:44vh;
+     left:50px;
+}
+ #right-arrow{
+     top:44vh;
+     right:50px;
+}
+ #up-arrow{
+     top:20px;
+     right:43vw;
+}
+ #down-arrow{
+     bottom:20px;
+     right:43vw;
+}
+ .arrow-cube{
+     transform: rotateX(-28deg) rotateY(-47deg);
+    /*transform:rotateZ(5deg);
+    */
+     transition : 1s;
+     width: 100%;
+    /*animation: rotate 5s infinite;
+    */
+     height: 100%;
+     position: relative;
+     transform-style: preserve-3d;
+     cursor: pointer;
+}
+ @keyframes bouncy{
+     0%{
+        transform: rotateX(-28deg) rotateY(-47deg) translateY(0px);
+    }
+     50%{
+        transform: rotateX(-28deg) rotateY(-47deg) translateY(-10px);
+    }
+     100%{
+        transform: rotateX(-28deg) rotateY(-47deg) translateY(0px);
+    }
+}
+ .arrow-cube:hover{
+     animation: bouncy 1s forwards;
+}
+ .arrow-cube-face {
+     position: absolute;
+     width: 25px;
+     height: 25px;
+     background:white;
+     border:1px solid black;
+     font-size: 40px;
+     text-align: center;
+     top: 50%;
+     transform: translateY(-50%);
+     font-size: 23px;
+    /*background-size:100%;
+    */
+}
+ .afront {
+     transform: rotateY( 0deg) translateZ(12.5px);
+}
+ .aright {
+     transform: rotateY( 90deg) translateZ(12.5px);
+}
+ .aback {
+     transform: rotateY(180deg) translateZ(12.5px);
+}
+ .aleft {
+     transform: rotateY(-90deg) translateZ(12.5px);
+}
+ .atop {
+     transform: rotateX( 90deg) translateZ(12.5px);
+}
+ .abottom {
+     transform: rotateX(-90deg) translateZ(12.5px);
+}
+ 

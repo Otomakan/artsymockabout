@@ -2,6 +2,9 @@ int xnum = 40;
 int ynum = 40;
 Dot[][] grid = new Dot[xnum][ynum];
 float time = 0;
+float timeMod = 50;
+float timespeed = 0.1;
+float frameCounter = 0;
 Column[] fall = new Column[xnum];
 
 void setup(){
@@ -22,7 +25,8 @@ void setup(){
 void draw(){
    background(204); 
     for(int i = 0; i <xnum; i++){
-    fall[i].lum = sin(noise(i+time));
+    fall[i].lum = map(noise(sin(0.1*(i+time))),0.4,0.62,0,1);
+    //println(noise(sin(0.1*(i+time))));
     fall[i].draw();
   }
   // for(int i = 0; i < xnum; i++){
@@ -36,7 +40,17 @@ void draw(){
   //    grid[i][ii].draw();
   //  }
   // }
-  time+=0.01;
+  float acceleration;
+  float desceleration;
+  if(frameCounter>timeMod){
+    
+    if(timespeed<1){
+       
+     }
+    timespeed+=random(desceleration,acceleration);
+  }
+  frameCounter+=1;
+  time+=timespeed;
 }
 
 
