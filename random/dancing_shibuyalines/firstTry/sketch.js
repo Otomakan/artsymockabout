@@ -3,8 +3,10 @@ const dotWidth = 10
 const recLength = 70
 const distanceEach  =dotWidth*3+recLength+recLength
 const arrLineDots = []
+const width = 600
+const height = 600
 function setup(){
-	createCanvas(600,600)
+	createCanvas(width,height)
 	background(0)
 	let y=20
 	let x =0 
@@ -36,7 +38,10 @@ function draw(){
 	// translate(width/2, height/16)
 	// rotate(PI / 3.0)
 	for(let i = 0; i < lineDotNum-1; i++){
-		arrLineDots[i].draw()
+		let tempObj = arrLineDots[i]
+		if(tempObj instanceof LineDot)
+			tempObj.move()
+		tempObj.draw()
 	}
 }
 
@@ -45,6 +50,11 @@ class LineDot {
 		this.xpos = xpos
 		this.ypos = ypos
 		this.color = color
+	}
+	move(){
+		this.xpos+=1
+		if(this.xpos>width+recLength+dotWidth*2)
+			this.xpos=0
 	}
 	draw(){
 		stroke(0)
