@@ -1,4 +1,3 @@
-
 class Path{
 	constructor(startNode) {
 	  this.startNode = startNode;
@@ -8,7 +7,7 @@ class Node {
 	constructor(x, y, value){
 		this.position = new Pos(x,y)
 		this.value = 0
-		this.neighbors{
+		this.neighbors = {
 			up:null,
 			down:null,
 			right:null,
@@ -17,64 +16,6 @@ class Node {
 	}
 }
 
-class Maze {
-	constructor(width, height, itemSize){
-		this.width = width
-		this.height = height
-		this.size = itemSize
-		// let fullMaze = new Graph()
-		this.firstNode  = new Node(0,0,0)
-		this.currentNode = this.firstNode
-		this.nextNode
-	}
-	initialize(){
-		// const currentNode = this.currentNode
-		if(this.currentNode.x == this.width-1){
-			if(this.currentNode.y === this.height-1){
-				// this is the end
-				return
-			}
-			const nextNode = new Node(0, currentNode.y+1,0)
-			this.currentNode.right = nextNode
-		}
-		const start = [Math.floor(Math.random(0,width)*width), Math.floor(Math.random(0,height)*height)]
-		const end =  [Math.floor(Math.random(0,width)*width), Math.floor(Math.random(0,height)*height)]
-		
-		fullMaze[start[0]][start[1]] = 2
-		fullMaze[end[0]][end[1]] = 3
-		this.fullMaze = fullMaze
-	}
-	getRandomValue(){
-		const coin = Math.random()
-		return coin>0.8 ? 0 : 1
-	}
-	display(){
-		const s = this.size
-		this.fullMaze.forEach((row,y)=>{
-			row.forEach((col,x)=>{
-				fill(0)
-				switch(col){
-					case 1:
-						fill(255)
-						break
-					case 2:
-						fill(255,0,0)
-						break
-
-					case 3:
-						fill(0,255,0)
-						break
-
-					default:
-						fill(0)
-				}
-				stroke(255)
-				rect(y*s,x*s,s,s)				
-			})
-		})
-	}
-
-}
 
 
 
@@ -84,10 +25,13 @@ function whatIsDirectLine(start, end){
 	//B = 10,10
 	// Function =  fn(x) = ax + b
 	//f(x) = x + 0
-	const slope = (start.x-start.y)/(end.x-end.y)
+
+	let slope = (start.y-end.y)/(start.x-end.x)
+	if(start.x-end.x===0)
+		slope=0
 	// y = slopex + b
 	// pointA[1] = slope*pointA[0] +b 
-	// b = pointA[1]-(pointA[0]*slope)
+
 	return {
 		slope,
 		intercept: start.y-(start.x*slope)
@@ -95,78 +39,53 @@ function whatIsDirectLine(start, end){
 }
 
 
-
-class Pos {
-	constructor(x,y){
-		this.x = x
-		this.y = y 
-	}
-}
-
 const treeOfPaths = {}
-const maze = new Maze(50,50,5)
-console.log(maz)
+const maze = new Maze(5,5,25)
+console.log(maze)
 
 function setup() {
   createCanvas(640, 480)
   background(250)
-
+  maze.initialize()
+  console.log("DIRECT LINE IS ")
+  console.log(maze)
+  const euristicFunction = whatIsDirectLine(maze.start, maze.end)
+  // const theoraticalBShortestNumberOfSteps = 
 }
 function draw() {
 	maze.display()
 }
 
 
+// Warn if overriding existing method
+if(Array.prototype.equals)
+    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+// attach the .equals method to Array's prototype to call it on any array
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time 
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;       
+        }           
+        else if (this[i] != array[i]) { 
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;   
+        }           
+    }       
+    return true;
+}
+// Hide method from for-in loops
+Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
 
-
-// class Maze {
-// 	constructor(width, height, itemSize){
-// 		this.width = width
-// 		this.height = height
-// 		this.size = itemSize
-// 		let fullMaze = []
-// 		for(let y = 0; y < height; y++){
-// 			fullMaze.push([])
-// 			for(let x = 0; x < width; x++){
-// 				const coin = Math.random()
-// 				coin>0.8 ?
-// 				fullMaze[y].push(0)
-// 				:fullMaze[y].push(1)
-// 			}
-// 		}
-// 		const start = [Math.floor(Math.random(0,width)*width), Math.floor(Math.random(0,height)*height)]
-// 		const end =  [Math.floor(Math.random(0,width)*width), Math.floor(Math.random(0,height)*height)]
-		
-// 		fullMaze[start[0]][start[1]] = 2
-// 		fullMaze[end[0]][end[1]] = 3
-// 		this.fullMaze = fullMaze
-// 	}
-// 	display(){
-// 		const s = this.size
-// 		this.fullMaze.forEach((row,y)=>{
-// 			row.forEach((col,x)=>{
-// 				fill(0)
-// 				switch(col){
-// 					case 1:
-// 						fill(255)
-// 						break
-// 					case 2:
-// 						fill(255,0,0)
-// 						break
-
-// 					case 3:
-// 						fill(0,255,0)
-// 						break
-
-// 					default:
-// 						fill(0)
-// 				}
-// 				stroke(255)
-// 				rect(y*s,x*s,s,s)				
-// 			})
-// 		})
-// 	}
-
-// }
 
