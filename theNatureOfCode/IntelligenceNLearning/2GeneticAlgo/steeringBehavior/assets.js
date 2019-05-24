@@ -4,25 +4,30 @@ class Vector{
 		this.y = y
 	}
 	add(otherVector){
-		return new Vector(this.x + otherVector.x, this.y + otherVector.y)
+		if(otherVector.x && otherVector.y)
+			return new Vector(this.x + otherVector.x, this.y + otherVector.y)
+		else
+			return new Vector(this.x + otherVector, this.y + otherVector)		
 	}
+	
 }
 class Vehicule {
-	constructor(x, y, acceleration, velocity, health){
+	constructor(x, y, acceleration, velocity, health,size){
 		this.loc = new Vector(x, y)
 		this.acceleration = acceleration
 		this.velocity  = velocity
 		this.health = health
+		this.size = size
 	}
 
 	display(){
 		noFill()
 		stroke(0)
 		strokeWeight(2)
-		rect(this.loc.x, this.loc.y, 10,10)
+		rect(this.loc.x, this.loc.y, this.size,this.size)
 	}
 	move(){
-		this.loc = this.loc.add(this.velocity)
+		this.loc = this.loc.add(this.velocity).add(this.acceleration)
 	}
 	correctiveFunction(){
 
@@ -31,24 +36,37 @@ class Vehicule {
 
 	}
 	lookAround(foodArray,poisonArray){
-		foodArray.forEach((food)=>{
+		foodArray.forEach((food, foodIndex)=>{
 			noFill()
 			stroke(0)
 			strokeWeight(1)
 			ellipse(this.loc.x, this.loc.y, 60,60)
-			// dx = abs(x-center_x)
-			// dy = abs(y-center_y)
+			const distanceX = abs(food.x-this.loc.x)
+			const distanceY = abs(food.y-this.loc.y)
+			
 			// R = radius
-			if (pow(abs(food.x - this.loc.x),2) + pow(abs(food.y - this.loc.y),2) < pow(30,2)){
-				
-				ellipse(food.x,food.y, 10,10)
-				const dx = (this.loc.x - food.x)/(this.loc.y - food.y)
-				const dy = (this.loc.y - food.y)/(this.loc.x - food.x)
-				this.velocity.x  = dx
-				this.velocity.y  = dy
-
+			// If in tadius
+			if(distanceX <= this.size/2 && distanceY <= this.size/2 ){
+				foodArray.splice(foodIndex, 1)
 			}
-		})
+			if (pow(abs(food.x - this.loc.x),2) + pow(abs(food.y - this.loc.y),2) < pow(30,2)){
+				ellipse(food.x,food.y, 10,10)
+
+				if(!distanceX<=1 || !distanceY <= 1){
+					let dx = distanceX/distanceY
+					let dy = distanceX/distanceY
+					if(dx>1){
+						console.log(dx)
+						return
+					}
+		
+					this.velocity.x  = dx
+					this.velocity.y  = dy
+				}
+			}
+
+			})
+		// })
 		// poisonArray.forEach((poison)=>{
 		// 	noFill()
 		// 	stroke(0)
@@ -78,6 +96,9 @@ class Eatables{
 	position(){
 		noStroke()
 		ellipse(this.x, this.y, this.size, this.size)
+	}
+	eaten(){
+		this.x
 	}
 }
 class Food extends Eatables{

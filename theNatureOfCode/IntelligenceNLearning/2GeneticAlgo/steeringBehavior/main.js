@@ -17,18 +17,19 @@ function setup() {
     for(let i = 0; i < 50; i++) {
         foods.push(new Food(getRandomX(), getRandomY(), 5))
     }
-    for(let i = 0; i < 5; i++) {
+    for(let i = 0; i < 4; i++) {
         const defaultHealth = 10
-        const defaultAcceleration = 0.01
+        const defaultAcceleration = 0.1
+        const defaultSize =10
 
-        vehicules.push(new Vehicule(getRandomX(), getRandomY(), defaultAcceleration, getRandomVelocity(), defaultHealth))
+        vehicules.push(new Vehicule(getRandomX(), getRandomY(), defaultAcceleration, getRandomVelocity(), defaultHealth, defaultSize))
     }
     frameRate(10)
 }
 function draw() {
     background(252, 245, 194)
+    vehicules.forEach((vehicule)=>{vehicule.display();vehicule.move();vehicule.lookAround(foods, poisons)})
     poisons.forEach((poison)=>{poison.display()})
     foods.forEach((food)=>{food.display()})
-    vehicules.forEach((vehicule)=>{vehicule.display();vehicule.move();vehicule.lookAround(foods, poisons)})
 }
 
