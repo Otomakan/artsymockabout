@@ -9,15 +9,44 @@ class Vector{
 		else
 			return new Vector(this.x + otherVector, this.y + otherVector)		
 	}
+
+	sub(otherVector){
+		if(otherVector.x && otherVector.y)
+			return new Vector(this.x - otherVector.x, this.y - otherVector.y)
+		else
+			return new Vector(this.x - otherVector, this.y - otherVector)	
+	}
+	setMag(newMagnitude){
+		const currentMagnitude = Math.sqrt(this.x * this.x + this.y * this.y)
+		if (currentMagnitude != 0 && currentMagnitude != 1) {
+			let newX = this.x * newMagnitude / currentMagnitude
+			let newY = this.y * newMagnitude / currentMagnitude
+			return new Vector(newX, newY)
+		  }
+		
+		  return new Vector(this.x, this.y)
+	}
+
+	limit(max){
+		const currentMagnitude = Math.sqrt(this.x * this.x + this.y * this.y)
+		if ((this.x * this.x + this.y * this.y) > max*max) {
+			let newX = this.x/currentMagnitude * max
+			let newY = this.y/currentMagnitude * max
+			return new Vector(newX, newY)
+		}
+		return new Vector(this.x, this.y)
+	}
 	
 }
 class Vehicule {
-	constructor(x, y, acceleration, velocity, health,size){
+	constructor(x, y, acceleration, velocity, health,size, maxSpeed,maxSteer){
 		this.loc = new Vector(x, y)
 		this.acceleration = acceleration
 		this.velocity  = velocity
 		this.health = health
 		this.size = size
+		this.maxSpeed = maxSpeed
+		this.maxSteer = maxSteer
 	}
 
 	display(){
@@ -29,73 +58,65 @@ class Vehicule {
 	move(){
 		this.loc = this.loc.add(this.velocity).add(this.acceleration)
 	}
-	correctiveFunction(){
 
+	steer(objective){
+		const desiredVelocity = objective.loc.sub(this.loc)
+		const adjustedDesiredVelocity = desiredVelocity.setMag( this.maxSpeed )
+		const steeredVelocity = adjustedDesiredVelocity.sub(this.velocity)
+		const limitedVector = steeredVelocity.limit(this.maxSteer)
+
+		this.velocity = limitedVector
 	}
-	steer(){
 
+	changeHealth(point){
+		this.health += point
+		if(this.health===0)
+			this.size = 0;
 	}
 	lookAround(foodArray,poisonArray){
+		noFill()
+		stroke(0)
+		strokeWeight(1)
+		ellipse(this.loc.x, this.loc.y, 60,60)
 		foodArray.forEach((food, foodIndex)=>{
-			noFill()
-			stroke(0)
-			strokeWeight(1)
-			ellipse(this.loc.x, this.loc.y, 60,60)
-			const distanceX = abs(food.x-this.loc.x)
-			const distanceY = abs(food.y-this.loc.y)
 			
-			// R = radius
-			// If in tadius
+			const distanceX = abs(food.loc.x-this.loc.x)
+			const distanceY = abs(food.loc.y-this.loc.y)
+
 			if(distanceX <= this.size/2 && distanceY <= this.size/2 ){
 				foodArray.splice(foodIndex, 1)
+				this.changeHealth(1)
 			}
-			if (pow(abs(food.x - this.loc.x),2) + pow(abs(food.y - this.loc.y),2) < pow(30,2)){
-				ellipse(food.x,food.y, 10,10)
-
-				if(!distanceX<=1 || !distanceY <= 1){
-					let dx = distanceX/distanceY
-					let dy = distanceX/distanceY
-					if(dx>1){
-						console.log(dx)
-						return
-					}
-		
-					this.velocity.x  = dx
-					this.velocity.y  = dy
-				}
+			if (pow(abs(food.loc.x - this.loc.x),2) + pow(abs(food.loc.y - this.loc.y),2) < pow(30,2)){
+				this.steer(food)
 			}
 
-			})
-		// })
-		// poisonArray.forEach((poison)=>{
-		// 	noFill()
-		// 	stroke(0)
-		// 	strokeWeight(1)
-		// 	ellipse(this.loc.x, this.loc.y, 60,60)
-		// 	// dx = abs(x-center_x)
-		// 	// dy = abs(y-center_y)
-		// 	// R = radius
-		// 	if (pow(abs(poison.x - this.loc.x),2) + pow(abs(poison.y - this.loc.y),2) < pow(30,2)){
-				
-		// 		ellipse(poison.x,poison.y, 10,10)
-		// 		this.velocity.x  = (this.loc.x - poison.x)/(this.loc.y - poison.y)
-		// 		this.velocity.y  = (this.loc.y - poison.y)/(this.loc.x - poison.x)
+		})
 
-		// 	}
-		// })
+		poisonArray.forEach((poison,poisonIndex)=>{
+			const distanceX = abs(poison.loc.x-this.loc.x)
+			const distanceY = abs(poison.loc.y-this.loc.y)
+			
+			if(distanceX <= this.size/2 && distanceY <= this.size/2 ){
+				poisonArray.splice(poisonIndex, 1)
+				this.changeHealth(-1)
+			}
+			if (pow(abs(poison.loc.x - this.loc.x),2) + pow(abs(poison.loc.y - this.loc.y),2) < pow(30,2)){
+				this.steer(poison)
+			}
+		})
 	}
 
 }
 
 class Eatables{
 	constructor(x,y, size){
-		this.x = x
-		this.y = y
+		this.loc = new Vector(x,y)
 		this.size = size
 	}
 	position(){
 		noStroke()
-		ellipse(this.x, this.y, this.size, this.size)
+		ellipse(this.loc.x, this.loc.y, this.size, this.size)
 	}
 	eaten(){
 		this.x
