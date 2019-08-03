@@ -1,21 +1,21 @@
-int imageWidth = 300;
-int imageHeight = 300;
+int imageWidth = 200;
+int imageHeight = 200;
 int[][]intensityMap = new int[imageWidth][imageHeight];
 Particle[]particleMap = new Particle[imageWidth*imageHeight];
 Particle HanSoloParticle = new Particle(100,100);
-int deposit = 50;
-int diffusion =30;
+int deposit = 20;
+int diffusion =10;
 PImage img;
-int numberOfParticles = 200;
+int numberOfParticles = 10;
 
   
 
 void setup() {
-  size(600, 600);
+  size(200, 200);
   //img = loadImage("christine.jpg");
 
   for( int i = 0; i< numberOfParticles; i++){
-    particleMap[i] = new Particle(randomRange(140,160), randomRange(140,160));
+    particleMap[i] = new Particle(randomRange(50,150), randomRange(50,150));
   }
   int xoff = 0;
   for(int y = 0; y < imageHeight; y+=1){
@@ -34,6 +34,7 @@ void setup() {
   
 
 void draw(){
+  background(255);
   int rectSize =  width/imageWidth;
   
   for( int i = 0; i< numberOfParticles; i++){
@@ -51,21 +52,8 @@ void draw(){
     PVector[] neighbours = getNeighbours(currentParticleLocation);
     for (int ii = 0 ; ii < neighbours.length; ii++){
     
-
+      intensityMap[Math.round(neighbours[ii].x)][Math.round(neighbours[ii].y)] += diffusion;
     }
-  
-  
-  
-  
-  particle.deploySensors();
-  particle.move(
-  intensityMap[Math.round(particle.frontRight.x)][Math.round(particle.frontRight.y)],
-  intensityMap[Math.round(particle.frontLeft.x)][Math.round(particle.frontLeft.y)],
-  intensityMap[Math.round(particle.front.x)][Math.round(particle.front.y)]
-  )
-;
-  }
-//Draw the map
     for(int y = 0; y < imageHeight; y+=1){
       for(int x = 0; x < imageHeight; x+=1){
         noStroke();
@@ -73,6 +61,16 @@ void draw(){
         rect(x*rectSize,y*rectSize,rectSize,rectSize);
       }
   }
+  
+  
+  
+  particle.deploySensors();
+  particle.move(intensityMap[Math.round(particle.frontRight.x)][Math.round(particle.frontRight.y)],
+  intensityMap[Math.round(particle.frontLeft.x)][Math.round(particle.frontLeft.y)],
+  intensityMap[Math.round(particle.front.x)][Math.round(particle.front.y)]);
+  }
+  
+  
   
 
   
@@ -108,7 +106,8 @@ class Particle{
       }
    }
    void move(int rightIntensity, int leftIntensity, int frontIntensity){
-
+       int nextX;
+       int nextY;
        if(rightIntensity == leftIntensity && leftIntensity == frontIntensity){
          int coinFlip = int(random(0,3));
          switch(coinFlip){

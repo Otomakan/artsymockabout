@@ -1,71 +1,50 @@
-int imageWidth = 300;
-int imageHeight = 300;
+int imageWidth = 200;
+int imageHeight = 200;
 int[][]intensityMap = new int[imageWidth][imageHeight];
 Particle[]particleMap = new Particle[imageWidth*imageHeight];
 Particle HanSoloParticle = new Particle(100,100);
-int deposit = 50;
-int diffusion =30;
+int deposit = 20;
+int diffusion =10;
 PImage img;
-int numberOfParticles = 200;
-
-  
 
 void setup() {
-  size(600, 600);
-  //img = loadImage("christine.jpg");
-
-  for( int i = 0; i< numberOfParticles; i++){
-    particleMap[i] = new Particle(randomRange(140,160), randomRange(140,160));
-  }
+  size(200, 200);
+  img = loadImage("christine.jpg");
   int xoff = 0;
   for(int y = 0; y < imageHeight; y+=1){
       for(int x = 0; x < imageHeight; x+=1){
         intensityMap[x][y] = Math.round(noise(xoff)*50.0);
-        intensityMap[x][y] = 0;
         //intensityMap[x][y] = 250-int(random(80));
         xoff+=1;
       }
   }
-  
-  println("got all");
-  frameRate(30);
+  frameRate(120);
 }
 
   
 
 void draw(){
+  background(255);
   int rectSize =  width/imageWidth;
   
-  for( int i = 0; i< numberOfParticles; i++){
-
-    Particle particle = particleMap[i];
-    PVector currentParticleLocation = particle.loc;
-    int currentParticleIntensity = intensityMap[Math.round(currentParticleLocation.x)][Math.round(currentParticleLocation.y)];
-   
-    if(currentParticleIntensity <255){
-      intensityMap[Math.round(currentParticleLocation.x)][Math.round(currentParticleLocation.y)] += deposit;
-      if(currentParticleIntensity>255){
-        intensityMap[Math.round(currentParticleLocation.x)][Math.round(currentParticleLocation.y)] = 255;
-      }
+  PVector currentParticleLocation = HanSoloParticle.loc;
+  int currentParticleIntensity = intensityMap[Math.round(currentParticleLocation.x)][Math.round(currentParticleLocation.y)];
+ 
+  if(currentParticleIntensity <255){
+    intensityMap[Math.round(currentParticleLocation.x)][Math.round(currentParticleLocation.y)] += deposit;
+    if(currentParticleIntensity>255){
+      intensityMap[Math.round(currentParticleLocation.x)][Math.round(currentParticleLocation.y)] = 255;
     }
-    PVector[] neighbours = getNeighbours(currentParticleLocation);
-    for (int ii = 0 ; ii < neighbours.length; ii++){
-    
-
-    }
-  
-  
-  
-  
-  particle.deploySensors();
-  particle.move(
-  intensityMap[Math.round(particle.frontRight.x)][Math.round(particle.frontRight.y)],
-  intensityMap[Math.round(particle.frontLeft.x)][Math.round(particle.frontLeft.y)],
-  intensityMap[Math.round(particle.front.x)][Math.round(particle.front.y)]
-  )
-;
   }
-//Draw the map
+  PVector[] neighbours = getNeighbours(currentParticleLocation);
+  for (int i = 0 ; i < neighbours.length; i++){
+    intensityMap[Math.round(neighbours[i].x)][Math.round(neighbours[i].y)] += diffusion;
+  }
+  
+  
+  
+  
+  
     for(int y = 0; y < imageHeight; y+=1){
       for(int x = 0; x < imageHeight; x+=1){
         noStroke();
@@ -74,7 +53,10 @@ void draw(){
       }
   }
   
-
+  HanSoloParticle.deploySensors();
+  HanSoloParticle.move(intensityMap[Math.round(HanSoloParticle.frontRight.x)][Math.round(HanSoloParticle.frontRight.y)],
+  intensityMap[Math.round(HanSoloParticle.frontLeft.x)][Math.round(HanSoloParticle.frontLeft.y)],
+  intensityMap[Math.round(HanSoloParticle.front.x)][Math.round(HanSoloParticle.front.y)]);
   
   
   
@@ -108,7 +90,8 @@ class Particle{
       }
    }
    void move(int rightIntensity, int leftIntensity, int frontIntensity){
-
+       int nextX;
+       int nextY;
        if(rightIntensity == leftIntensity && leftIntensity == frontIntensity){
          int coinFlip = int(random(0,3));
          switch(coinFlip){
@@ -183,12 +166,9 @@ void makeNoisyBitMap(){
       //float bright = brightness(img.pixels[imageLoc]);
       float bright = noise(r+xoff, g+yoff) * 255;
 
+     fdgufn 
     }
   }
   
   updatePixels();
 }
-
-  int randomRange(int a,int b){
-     return Math.round(random(a,b)); 
-  }
